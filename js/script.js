@@ -21,6 +21,7 @@ const mediCardInfo = {
 
 let banks = '1. Access\n2. GTB\n3. FCMB\n4. Fidelity';
 
+// CHECK THE INPUT FOR ACCOUNT NUMBER
 function checkInput(input) {
   // Numbers only
   if (/^[0-9]+$/.test(input)) {
@@ -44,6 +45,7 @@ function checkInput(input) {
   }
 }
 
+// Airtime Purchase
 function airtimePurchase() {
   let myCurrentAccBal;
   let successfulPurchase;
@@ -87,6 +89,7 @@ function airtimePurchase() {
   }
 }
 
+// Transfer money
 function transferMoney() {
   let receiverAccNo = prompt("Enter the receiver's account number");
   if (checkInput(receiverAccNo)) {
@@ -198,18 +201,27 @@ function transferMoney() {
   }
 }
 
+// Bank Transfer process
 const initTransaction = transactionBtn.addEventListener('click', () => {
   let insertCard = prompt('Please insert your card by typing "Yes"');
+
+  // Confirmation to Insert A Card
   if (insertCard.toLowerCase() === 'yes') {
     let confirmPin = Number(prompt('Please enter your pin'));
+
+    // Confirm PIN
     if (confirmPin === myCardInfo.pin) {
       let chooseOption = prompt(
         'Type 1 to Withdraw \nType 2 to Transfer\nType 3 to buy airtime'
       );
+
+      // Choose Transaction Type
       if (chooseOption === '1') {
         let transOrExit = prompt(
           'Service not available. Please type 2 to Transfer or 0 to exit'
         );
+
+        //
         if (transOrExit === '2') {
           transferMoney();
         } else if (transOrExit === '0') {
