@@ -22,8 +22,12 @@ const mediCardInfo = {
 let banks = '1. Access\n2. GTB\n3. FCMB\n4. Fidelity';
 
 function checkInput(input) {
+  // Numbers only
+  if (/^[0-9]+$/.test(input)) {
+    return true;
+  }
   // Alphabets only
-  if (/^[a-zA-Z]+$/.test(input)) {
+  else if (/^[a-zA-Z]+$/.test(input)) {
     return false;
   }
   // Alphanumeric characters
@@ -85,103 +89,111 @@ function airtimePurchase() {
 
 function transferMoney() {
   let receiverAccNo = prompt("Enter the receiver's account number");
-  if (checkInput(receiverAccNo) && receiverAccNo.length === 10) {
-    let bank = Number(
-      prompt(`Type 1, 2, 3, or 4, to choose the bank\n${banks}`)
-    );
-    if (bank === 1) {
-      bank = 'Access';
-      if (
-        mediCardInfo.bank === 'Access' &&
-        receiverAccNo === mediCardInfo.accountNumber
-      ) {
-        let receiverInfo = prompt(
-          `Receiver's Information:\n\nReceiver's Account Name: ${mediCardInfo.name}.\nReceiver's Account Number: ${mediCardInfo.accountNumber}.\n\nPlease type 1 to confirm or cancel`
-        );
-        if (receiverInfo === '1') {
-          let transferAmount = prompt(
-            `Please enter the amount you wish to transfer`
+  if (checkInput(receiverAccNo)) {
+    if (receiverAccNo.length === 10) {
+      let bank = Number(
+        prompt(`Type 1, 2, 3, or 4, to choose the bank\n${banks}`)
+      );
+      if (bank === 1) {
+        bank = 'Access';
+        if (
+          mediCardInfo.bank === 'Access' &&
+          receiverAccNo === mediCardInfo.accountNumber
+        ) {
+          let receiverInfo = prompt(
+            `Receiver's Information:\n\nReceiver's Account Name: ${mediCardInfo.name}.\nReceiver's Account Number: ${mediCardInfo.accountNumber}.\n\nPlease type 1 to confirm or cancel`
           );
-          while (transferAmount === '') {
-            transferAmount = prompt(
-              `Please enter the amount you wish to transfer or cancel.`
+          if (receiverInfo === '1') {
+            let transferAmount = prompt(
+              `Please enter the amount you wish to transfer`
             );
-          }
-          if (transferAmount) {
-            while (myCardInfo.balance <= transferAmount) {
+            while (transferAmount === '') {
               transferAmount = prompt(
-                `Insufficient Balance! Your Account balance is ${myCardInfo.balance}\nPlease enter a valid transfer amount or type 0 to exit`
+                `Please enter the amount you wish to transfer or cancel.`
               );
             }
-            if (transferAmount === '0' || transferAmount === '') {
-              alert(
-                `Oga ${myCardInfo.name}, thank you for banking with us. Your money no reach. Bye!`
-              );
-            }
-            console.log(myCardInfo.balance > transferAmount);
-            if (
-              transferAmount !== '' &&
-              transferAmount !== '0' &&
-              myCardInfo.balance > transferAmount
-            ) {
-              let transferConfirm = prompt(
-                `You are sending the sum of N${transferAmount} to:\n\nAccount Name: ${mediCardInfo.name}.\nAccount Number: ${mediCardInfo.accountNumber}.\nBank: ${mediCardInfo.bank}.\n\nPlease type 1 to continue or cancel`
-              );
-              transferConfirm = '1';
-              if (transferConfirm) {
-                let mediBalance =
-                  Number(mediCardInfo.balance) + Number(transferAmount);
-                let myCurrentAccBal =
-                  Number(myCardInfo.balance) - Number(transferAmount);
-                let successfulTransfer = prompt(
-                  `Transfer successful! Your account balance is N${myCurrentAccBal}.\n\nType 1 to check Medi's Account Balance or Type 2 to exit`
+            if (transferAmount) {
+              while (myCardInfo.balance <= transferAmount) {
+                transferAmount = prompt(
+                  `Insufficient Balance! Your Account balance is ${myCardInfo.balance}\nPlease enter a valid transfer amount or type 0 to exit`
                 );
-                if ((successfulTransfer = '1')) {
-                  let confirm = prompt(
-                    `Medi's Account Balance is: ${mediBalance}.\nPlease type 2 to exit`
+              }
+              if (transferAmount === '0' || transferAmount === '') {
+                alert(
+                  `Oga ${myCardInfo.name}, thank you for banking with us. Your money no reach. Bye!`
+                );
+              }
+              console.log(myCardInfo.balance > transferAmount);
+              if (
+                transferAmount !== '' &&
+                transferAmount !== '0' &&
+                myCardInfo.balance > transferAmount
+              ) {
+                let transferConfirm = prompt(
+                  `You are sending the sum of N${transferAmount} to:\n\nAccount Name: ${mediCardInfo.name}.\nAccount Number: ${mediCardInfo.accountNumber}.\nBank: ${mediCardInfo.bank}.\n\nPlease type 1 to continue or cancel`
+                );
+                transferConfirm = '1';
+                if (transferConfirm) {
+                  let mediBalance =
+                    Number(mediCardInfo.balance) + Number(transferAmount);
+                  let myCurrentAccBal =
+                    Number(myCardInfo.balance) - Number(transferAmount);
+                  let successfulTransfer = prompt(
+                    `Transfer successful! Your account balance is N${myCurrentAccBal}.\n\nType 1 to check Medi's Account Balance or Type 2 to exit`
                   );
-                  if (confirm === '2') {
+                  if ((successfulTransfer = '1')) {
+                    let confirm = prompt(
+                      `Medi's Account Balance is: N${mediBalance}.\nPlease type 2 to exit`
+                    );
+                    if (confirm === '2') {
+                      alert(`Thank you for banking with us. Bye!`);
+                    }
+                  } else if (successfulTransfer === '2') {
                     alert(`Thank you for banking with us. Bye!`);
                   }
-                } else if (successfulTransfer === '2') {
-                  alert(`Thank you for banking with us. Bye!`);
+                } else {
+                  prompt(`Thank you for banking with us. Bye!`);
                 }
-              } else {
-                prompt(`Thank you for banking with us. Bye!`);
               }
+            } else {
+              alert(
+                "Please type an amount next time. If you are not ready, don't initiate transaction. Thank you!"
+              );
             }
           } else {
             alert(
-              "Please type an amount next time. If you are not ready, don't initiate transaction. Thank you!"
+              'Be careful to check wetin you type make you no go lose your money ooo. Thank you for your attempt anyways. Please try again later with carefulness.'
             );
           }
         } else {
           alert(
-            'Be careful to check wetin you type make you no go lose your money ooo. Thank you for your attempt anyways. Please try again later with carefulness.'
+            "Can't retrieve the acccount details. Please check the account number and try again."
           );
         }
-      } else {
+      } else if (bank === 2) {
+        bank = 'GTB';
+        alert('Nothing concern GTB for here. Go and open Access Bank account!');
+      } else if (bank === 3) {
+        bank = 'FCMB';
         alert(
-          "Can't retrieve the acccount details. Please check the account number and try again."
+          'Nothing concern FCMB for here. Go and open Access Bank account!'
         );
+      } else if (bank === 4) {
+        bank = 'Fidelity';
+        alert(
+          'Nothing concern Fidelity for here. Go and open Access Bank account!'
+        );
+      } else {
+        alert('The bank is not available');
       }
-    } else if (bank === 2) {
-      bank = 'GTB';
-      alert('Nothing concern GTB for here. Go and open Access Bank account!');
-    } else if (bank === 3) {
-      bank = 'FCMB';
-      alert('Nothing concern FCMB for here. Go and open Access Bank account!');
-    } else if (bank === 4) {
-      bank = 'Fidelity';
-      alert(
-        'Nothing concern Fidelity for here. Go and open Access Bank account!'
-      );
     } else {
-      alert('The bank is not available');
+      alert(
+        'Account number suppose reach 10 digits. Look am well and try again. Thank you!'
+      );
     }
   } else {
     alert(
-      'Account number suppose reach 10 digits or you don type gibberish put inside. Look am well and try again. Thank you!'
+      'You don type gibberish put inside. Look am well and try again. Thank you!'
     );
   }
 }
