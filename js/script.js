@@ -54,7 +54,7 @@ function airtimePurchase() {
     prompt('Enter the amount of Airtime you want to purchase: ')
   );
 
-  if (airTimeAmount >= 100 && airTimeAmount <= 499) {
+  if (airTimeAmount >= 50 && airTimeAmount <= 499) {
     enteredAmount = airTimeAmount;
     airTimeAmount -= airTimeAmount * 0.02;
   } else if (airTimeAmount >= 500 && airTimeAmount <= 999) {
@@ -69,7 +69,7 @@ function airtimePurchase() {
   }
 
   // AIRTIME PURCHASE PROCESS
-  if (airTimeAmount) {
+  function transactionProcess() {
     myCurrentAccBal = myCardInfo.balance - airTimeAmount;
     successfulPurchase = prompt(
       'Thank you for the purchase of N' +
@@ -87,6 +87,18 @@ function airtimePurchase() {
     } else {
       alert('Where are you rushing to? .😠');
     }
+  }
+  if (airTimeAmount < 50) {
+    airTimeAmount = prompt(
+      `Invalid amount. Please purchase input a value from N50 or you type 0 to exit`
+    );
+    if (airTimeAmount >= 50) {
+      transactionProcess();
+    } else {
+      alart(`Thank you for your attempt. Take care of yourself.`);
+    }
+  } else if (airTimeAmount >= 50) {
+    transactionProcess();
   } else {
     alert('Thank you for banking with us. You be the main boss!');
   }
