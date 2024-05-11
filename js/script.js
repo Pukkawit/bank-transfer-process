@@ -68,6 +68,7 @@ function airtimePurchase() {
     airTimeAmount = airTimeAmount - airTimeAmount * (10 / 100);
   }
 
+  // AIRTIME PURCHASE PROCESS
   if (airTimeAmount) {
     myCurrentAccBal = myCardInfo.balance - airTimeAmount;
     successfulPurchase = prompt(
@@ -79,6 +80,8 @@ function airtimePurchase() {
         myCurrentAccBal +
         '. \n\nPlease type 0 to exit'
     );
+
+    // SUCCESSFUL AIRTIME PURHCASE
     if (successfulPurchase === '0') {
       alert('Thank you for banking with us. You be the main boss!');
     } else {
