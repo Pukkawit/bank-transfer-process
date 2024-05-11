@@ -85,7 +85,7 @@ function airtimePurchase() {
     if (successfulPurchase === '0') {
       alert('Thank you for banking with us. You be the main boss!');
     } else {
-      alert('Where are you rushing to? .😠');
+      alert('Where are you rushing to? 😠');
     }
   }
   if (airTimeAmount < 50) {
@@ -93,9 +93,10 @@ function airtimePurchase() {
       `Invalid amount. Please purchase input a value from N50 or you type 0 to exit`
     );
     if (airTimeAmount >= 50) {
+      enteredAmount = airTimeAmount;
       transactionProcess();
     } else {
-      alart(`Thank you for your attempt. Take care of yourself.`);
+      alert(`Thank you for your attempt. Take care of yourself.`);
     }
   } else if (airTimeAmount >= 50) {
     transactionProcess();
