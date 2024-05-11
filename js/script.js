@@ -54,18 +54,21 @@ function airtimePurchase() {
     prompt('Enter the amount of Airtime you want to purchase: ')
   );
 
-  if (airTimeAmount >= 50 && airTimeAmount <= 499) {
-    enteredAmount = airTimeAmount;
-    airTimeAmount -= airTimeAmount * 0.02;
-  } else if (airTimeAmount >= 500 && airTimeAmount <= 999) {
-    enteredAmount = airTimeAmount;
-    airTimeAmount -= airTimeAmount * 0.04;
-  } else if (airTimeAmount >= 1000 && airTimeAmount <= 9999) {
-    enteredAmount = airTimeAmount;
-    airTimeAmount -= airTimeAmount * 0.05;
-  } else {
-    enteredAmount = airTimeAmount;
-    airTimeAmount = airTimeAmount - airTimeAmount * (10 / 100);
+  // Condition for Percentage Deduction
+  function deductionCondition() {
+    if (airTimeAmount >= 50 && airTimeAmount <= 499) {
+      enteredAmount = airTimeAmount;
+      airTimeAmount -= airTimeAmount * 0.02;
+    } else if (airTimeAmount >= 500 && airTimeAmount <= 999) {
+      enteredAmount = airTimeAmount;
+      airTimeAmount -= airTimeAmount * 0.04;
+    } else if (airTimeAmount >= 1000 && airTimeAmount <= 9999) {
+      enteredAmount = airTimeAmount;
+      airTimeAmount -= airTimeAmount * 0.05;
+    } else {
+      enteredAmount = airTimeAmount;
+      airTimeAmount = airTimeAmount - airTimeAmount * (10 / 100);
+    }
   }
 
   // AIRTIME PURCHASE PROCESS
@@ -93,12 +96,13 @@ function airtimePurchase() {
       `Invalid amount. Please purchase input a value from N50 or you type 0 to exit`
     );
     if (airTimeAmount >= 50) {
-      enteredAmount = airTimeAmount;
+      deductionCondition();
       transactionProcess();
     } else {
       alert(`Thank you for your attempt. Take care of yourself.`);
     }
   } else if (airTimeAmount >= 50) {
+    deductionCondition();
     transactionProcess();
   } else {
     alert('Thank you for banking with us. You be the main boss!');
